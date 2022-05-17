@@ -16,7 +16,7 @@ public class Yahtzee {
       }
     }
     // means crossed out
-    if (counter == 0) {
+    if (choice > 15) {
       Yahtzee.scores[choice - 1] = 0;
     } else {
       Yahtzee.scores[choice - 1] = counter;
@@ -25,38 +25,44 @@ public class Yahtzee {
   }
 
   public static void lower(int choice) {
-    int counter = 0;
-    int amount = 0;
     int total = 0;
-    // for three of a kind, four of a kind, and yahtzee
-    for (int i = 0; i < 5; i++) {
-      if (choice == Yahtzee.rolls[i]) {
-        counter += choice;
+
+    // cross out a category
+    if (choice > 15) {
+      Yahtzee.scores[(choice / 100) - 1] = 0;
+    }
+
+    // for three of a kind, four of a kind, and chance
+    if (choice == 7 || choice == 8 || choice == 14) {
+      for (int i = 0; i < 5; i++) {
+        System.out.println(Yahtzee.rolls[i]);
         total += Yahtzee.rolls[i];
-        amount++;
       }
-    }
-    // means crossed out
-    if (amount == 0) {
-      Yahtzee.scores[choice - 1] = 0;
-    }
-
-    // three of a kind
-    if (amount >= 3) {
-
-      Yahtzee.scores[choice - 1] = total;
-    }
-    // four of a kind
-    if (amount >= 4) {
       Yahtzee.scores[choice - 1] = total;
     }
 
-    if (amount == 5) {
+    // full house
+    else if (choice == 9) {
+      Yahtzee.scores[choice - 1] = 25;
+    }
+    // sm straight
+    else if (choice == 10) {
+      Yahtzee.scores[choice - 1] = 30;
+    }
+    // lrg straight
+    else if (choice == 11) {
+      Yahtzee.scores[choice - 1] = 40;
+    }
+    // yahtzee
+    else if (choice == 12) {
       Yahtzee.scores[choice - 1] = 50;
     }
+    // bonus yahtzee
+    else {
+      Yahtzee.scores[choice - 1] += 100;
+    }
 
-
-    Yahtzee.score();
+    Yahtzee.printScore();
 
   }
 
@@ -79,6 +85,9 @@ public class Yahtzee {
     for (int i = 0; i < 14; i++) {
       // init everything to 0
       Yahtzee.scores[i] = -1;
+      if (i == 13) {
+        Yahtzee.scores[i] = 0;
+      }
     }
   }
 
@@ -92,7 +101,8 @@ public class Yahtzee {
   public static int score() {
     Scanner userIn = new Scanner(System.in);
     Yahtzee.printScore();
-    System.out.println("Which category do you choose?(Integer) ");
+    System.out.println(
+        "Which category do you choose?(Integer) If you want to cross out, add 00 to the end. EX: cross out yahtzee = 1200");
     int category = userIn.nextInt();
     // Yahtzee.categories[category - 1]
     if (category - 1 <= 6) {
@@ -128,7 +138,7 @@ public class Yahtzee {
         Yahtzee.rolls[3] = die4;
         Yahtzee.rolls[4] = die5;
       }
-
+      System.out.println("----------------------------------------------------------------------");
       System.out.println("roll number " + (i + 1) + ": " + Yahtzee.rolls[0] + " " + Yahtzee.rolls[1]
           + " " + Yahtzee.rolls[2] + " " + Yahtzee.rolls[3] + " " + Yahtzee.rolls[4]);
 
@@ -173,10 +183,29 @@ public class Yahtzee {
 
   }
 
+  public static int totalScore() {
+    int upperTotal = 0;
+    int total = 0;
+    for (int i = 0; i < 6; i++) {
+      upperTotal += Yahtzee.scores[i];
+      total += Yahtzee.scores[i];
+    }
+    // upper bonus
+    if (upperTotal >= 63) {
+      total += 35;
+    }
+
+    for (int i = 6; i < 14; i++) {
+      total += Yahtzee.scores[i];
+    }
+    return total;
+  }
+
   public static void main(String[] args) {
     for (int i = 0; i < 13; i++) {
-      System.out.println("Round " + i);
       Yahtzee.roll();
     }
+    int finalScore = Yahtzee.totalScore();
+    System.out.println("Final score is: " + finalScore);
   }
 }
