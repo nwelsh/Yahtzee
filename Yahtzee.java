@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class Yahtzee {
   static int[] rolls = new int[5];
   static String[] categories = new String[14];
-  static int[] scores = new int[14];
+  public static int[] scores = new int[14];
   static boolean[] isAvail = new boolean[14];
 
   public static void upper(int choice) {
@@ -43,6 +43,7 @@ public class Yahtzee {
 
     // three of a kind
     if (amount >= 3) {
+
       Yahtzee.scores[choice - 1] = total;
     }
     // four of a kind
@@ -174,6 +175,7 @@ public class Yahtzee {
 
   public static void main(String[] args) {
     for (int i = 0; i < 13; i++) {
+      System.out.println("Round " + i);
       Yahtzee.roll();
     }
   }
