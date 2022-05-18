@@ -26,8 +26,8 @@ public class Yahtzee {
   }
 
   public static void lower(int choice) {
+    Scanner userIn = new Scanner(System.in);
     int total = 0;
-    System.out.println((choice / 100) - 1);
 
     // cross out a category
     if (choice > 15) {
@@ -37,7 +37,6 @@ public class Yahtzee {
     // for three of a kind, four of a kind, and chance
     else if (choice == 7 || choice == 8 || choice == 14) {
       for (int i = 0; i < 5; i++) {
-        System.out.println(Yahtzee.rolls[i]);
         total += Yahtzee.rolls[i];
       }
       Yahtzee.scores[choice - 1] = total;
@@ -59,9 +58,32 @@ public class Yahtzee {
     else if (choice == 12) {
       Yahtzee.scores[choice - 1] = 50;
     }
-    // bonus yahtzee
+    // bonus yahtzee, need to implement bonus yahtzee
     else {
-      Yahtzee.scores[choice - 1] += 100;
+      if (Yahtzee.scores[choice - 1] > 0) {
+        Yahtzee.scores[choice - 1] += 100;
+      } else {
+        Yahtzee.scores[choice - 1] = 100;
+      }
+      System.out.println("Choose your bonus category: ");
+      int category = userIn.nextInt();
+      // if upper, three of a kind, four, chance
+      if (category <= 6 || category == 7 || category == 8 || category == 14) {
+        Yahtzee.scores[category - 1] = Yahtzee.rolls[0] * 5;
+      } else {
+        // full house
+        if (category == 9) {
+          Yahtzee.scores[category - 1] = 25;
+        }
+        // sm straight
+        else if (category == 10) {
+          Yahtzee.scores[category - 1] = 30;
+        }
+        // lrg straight
+        else if (category == 11) {
+          Yahtzee.scores[category - 1] = 40;
+        }
+      }
     }
 
     Yahtzee.printScore();
@@ -87,7 +109,7 @@ public class Yahtzee {
     for (int i = 0; i < 14; i++) {
       // init everything to 0
       Yahtzee.scores[i] = -1;
-      if (i == 13) {
+      if (i == 14) {
         Yahtzee.scores[i] = 0;
       }
     }
