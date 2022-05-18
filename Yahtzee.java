@@ -3,29 +3,31 @@ import java.util.Scanner;
 
 
 public class Yahtzee {
-  static int[] rolls = new int[5];
-  static String[] categories = new String[14];
+  public static int[] rolls = new int[5];
+  public static String[] categories = new String[14];
   public static int[] scores = new int[14];
-  static boolean[] isAvail = new boolean[14];
 
   public static void upper(int choice) {
     int counter = 0;
+    if (choice > 15) {
+      Yahtzee.scores[choice - 1] = 0;
+    }
+
     for (int i = 0; i < 5; i++) {
       if (choice == Yahtzee.rolls[i]) {
         counter += choice;
       }
     }
     // means crossed out
-    if (choice > 15) {
-      Yahtzee.scores[choice - 1] = 0;
-    } else {
-      Yahtzee.scores[choice - 1] = counter;
-    }
+
+    Yahtzee.scores[choice - 1] = counter;
+
     Yahtzee.printScore();
   }
 
   public static void lower(int choice) {
     int total = 0;
+    System.out.println((choice / 100) - 1);
 
     // cross out a category
     if (choice > 15) {
@@ -33,7 +35,7 @@ public class Yahtzee {
     }
 
     // for three of a kind, four of a kind, and chance
-    if (choice == 7 || choice == 8 || choice == 14) {
+    else if (choice == 7 || choice == 8 || choice == 14) {
       for (int i = 0; i < 5; i++) {
         System.out.println(Yahtzee.rolls[i]);
         total += Yahtzee.rolls[i];
@@ -123,7 +125,6 @@ public class Yahtzee {
     int die3 = randNum.nextInt(6) + 1;
     int die4 = randNum.nextInt(6) + 1;
     int die5 = randNum.nextInt(6) + 1;
-    Yahtzee.init();
 
     for (int i = 0; i < 3; i++) {
       if (newRands) {
@@ -202,6 +203,7 @@ public class Yahtzee {
   }
 
   public static void main(String[] args) {
+    Yahtzee.init();
     for (int i = 0; i < 13; i++) {
       Yahtzee.roll();
     }
