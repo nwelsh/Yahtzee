@@ -128,8 +128,9 @@ public class Yahtzee {
     System.out.println(
         "Which category do you choose?(Integer) If you want to cross out, add 00 to the end. EX: cross out yahtzee = 1200");
     int category = userIn.nextInt();
+    System.out.println(category);
     // Yahtzee.categories[category - 1]
-    if (category - 1 <= 6) {
+    if (category <= 6) {
       Yahtzee.upper(category);
     } else {
       Yahtzee.lower(category);
