@@ -227,7 +227,7 @@ public class Yahtzee {
 
   public static void main(String[] args) {
     Yahtzee.init();
-    System.out.println("Yahtzee Rules: You will be given 5 'dice.' If you want to keep all 5, press the K key, if you want to re roll all, press the A key, if you want to reroll some, you will say how many out of 5, then the index of which dice you want to roll. You will get 3 turns. After 3 turns, you will select which category you want your points to go in. If you cant go in any category you will cross out the index by adding a 00 to the end of the shown category number.")
+    System.out.println("Yahtzee Rules: You will be given 5 'dice.' If you want to keep all 5, press the K key, if you want to re roll all, press the A key, if you want to reroll some, you will say how many out of 5, then the index of which dice you want to roll. You will get 3 turns. After 3 turns, you will select which category you want your points to go in. If you cant go in any category you will cross out the index by adding a 00 to the end of the shown category number.");
     for (int i = 0; i < 13; i++) {
       Yahtzee.roll();
     }
